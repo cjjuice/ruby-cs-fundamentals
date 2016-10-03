@@ -2,39 +2,49 @@
 class Node
   attr_accessor :val, :next
 
-  def initialize(val=nil, next_node=nil)
-    @val = val
-    @next = next_node
+  def initialize(opts={})
+    opts.each { |k,v| instance_variable_set("@#{k}", v) }
   end
+
 end
 
 # Double linked
-class DoubleNode
-  attr_accessor :val, :next, :prev
+class DoubleNode < Node
+  attr_accessor :prev
 
-  def initialize(val=nil, next_node=nil, prev_node=nil)
-    @val = val
-    @next = next_node
-    @prev = prev_node
+  def delete
+    if self.next && self.prev
+      self.next.prev = self.prev
+      self.prev.next = self.next
+    elsif self.prev
+      self.prev.next = nil
+    elsif self.next
+      self.next.prev = nil
+    end
   end
 end
 
 # make a singly linked list
-root = Node.new(0)
+root = Node.new({val: 0})
 active = root
 5.times do |n|
-  active.next = Node.new(n+1)
+  active.next = Node.new({val: n+1})
   active = active.next
 end
 
 puts root.inspect
 
 # make a double!
-dbl_root = DoubleNode.new(0)
+dbl_root = DoubleNode.new({val: 0})
 dbl_active = dbl_root
 5.times do |n|
-  dbl_active.next = DoubleNode.new(n+1, nil, dbl_active)
+  dbl_active.next = DoubleNode.new({val: n+1, prev: dbl_active})
   dbl_active = dbl_active.next
 end
 
+puts dbl_root.inspect
+
+# delete 2nd node
+dbl_root.next.delete
+# root now points to 3rd
 puts dbl_root.inspect
