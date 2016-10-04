@@ -1,5 +1,5 @@
 class TreeNode
-  include Enumerable, Comparable
+  include Enumerable
   attr_accessor :val, :left, :right
 
   def initialize(opts={})
