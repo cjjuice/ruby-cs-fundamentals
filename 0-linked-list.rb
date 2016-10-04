@@ -13,13 +13,13 @@ class DoubleNode < Node
   attr_accessor :prev
 
   def delete
-    if self.next && self.prev
-      self.next.prev = self.prev
-      self.prev.next = self.next
-    elsif self.prev
-      self.prev.next = nil
-    elsif self.next
-      self.next.prev = nil
+    if @next && @prev
+      @next.prev = @prev
+      @prev.next = @next
+    elsif @prev
+      @prev.next = nil
+    elsif @next
+      @next.prev = nil
     end
   end
 end
